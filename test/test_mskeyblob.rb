@@ -1,24 +1,77 @@
 require 'test/unit'
 require 'mskeyblob'
+require 'base64'
 
 class TestActor < Test::Unit::TestCase
-  TEST_PRIVATE_KEY = Base64.decode64 'BwIAAACkAABSU0EyAAgAAAEAAQA72ZBkn1Eiafe+SM+oycylB1EEMIoDXiJ0snrrSAtuD89Qwdw8LFQmRX89bxDnugCYXsS2h1vDdj5izufDZoI6LXiyNf5BLOA0A8JgTNI/pjnS+C6jnyRV2udeddhieaYlRtlnHjUDuT3CpMfOQZYY9ClW8hjbP08OLmmk7ENky/CZGS2bxSOD8y+ynTefZ2ZBLf7MBYlXF/DmL7IWz1QmuScdpdte9vC0L66eFN1i6tRD5x9B73eNZzz7fu0rMZ6/k1GNxj8q5wM0IUcLXHw8DVvyje942HwMDzkgSDj7Y32S0FYU2E9Q/lCb5iYIq0iq0GBXKurx0zfRv4sJNtq3I/vhc91c12GtD4cnvtRW395vhkm1eGpzTZ/RAN4oUCcO3saJND7JFtEu8FT9+/S9CfP4i3s1I4HYZVVWRY5EUbDSfKThlzHHgWDzJb4l2gU34D3xjUBdKyaBhtI58bxUmt8k/H+1b6BMJScX21DpVuSfKCSokduAkossSJz7C8cJt5NGu6hxPSiYM3K701ppF79b7qmaeZHVWp0HhkAIl/RG6zhCQV7Zibhut5fKoecdvEHXABSw+gWPWZnHWwFcjjNH99W1w17q9X8Y9xcuGaiwkxR0xLwdxAjwBZKI9cgCkuOr4H7Co+akL9nbIXwNAnqTvZvDTlRfhV0tzT917In5MsGJcZsVuKmtT+I0AdbrrnmX/zY5ZBcwfTRIYg5SrV9msEetU/fZ8i4Koek3/Y3nDK4MQ75AT8IeHVW0QV9/ATqkhIbSZDwFselJXg3AdxDECwFcyD3SXfSSKQrWB9vuQp5Q9u3HfZZjuRRq6RG9N+tXDoCkkDYyAWAUv3xJQXpxn/uynwh1+DBLdEVb1WllmOvCRMUMll4mdTX3kbtfPeKii6kQ8uaSteV21U7hxzFP3UZ/vxNJYQwdRVlrtx9ZA4CI3J0JODPyp/xK8h5dpr9d53QVFBj9FbYteGDkPpyE2xJqpdOCXC1psXrY7YcutC36G1WFP2fBL6VJKM/rB6Syc/zVkD1rOqqN0r+TWtileVmfJ3dp2DKrhRP5RC03JMf8ZgtpEZLekaFZ0nGKCXtkL89D0hC2s1+WhgytB/XmfiwhEOXRabUuv2xjxSr3HjALwZsQa+IS17fhvPIubSnIPbqAPODloogP3gAQpL5jib2gqoCzYhq12MNchgmBiJ0sp1IjPv1lDalco00naCEy0XZZc9eue6ldKcDHoBd6sD3Rd4BIbWkmyWiSu79GJM8yQRyAM8/47LSHIQp4aBrcMbzy+lpjxgqk2D2eFL4WLqCxUJNhvCEe1ghBFpZXRbL6j/5kI/NmVV//mVpGh9Lx4LD8v5eO/hTGlyq4ZcOC3JaZr4LkJ7QvMGk+YaoIgYidFyNcOyaA8Sv46aG4GcFF4jM0EGuf8ZmWVGA9JzyTfW7N+QPO6nN3EzQg5yZQ/ScfCU0gkk4zNI3FJgqrEUHXk8Rogi3FTzJOWiWyKGygIbw3Sl4mAnO0JXM9z5cTQttqWXQPIoFES45qpw0='
   TEST_DATA = 'test'
-  ENCRYPTED_TEST_DATA = Base64.decode64 'bQVdfSCNUuHBdPVFq6t9SN2A4mMT+ndVy3zorv0gqOUmA+uxyVesp5qTTfk8+veYNaGUwxIB7wvm1TIfFbAtBBqgzYEIzD8dQFjLLsTurNmoWa4dayhlOjNJR3uawF4kqfQYseowdIBwbgd/sxZBzYJFBvprol5j1m5mXB7LaCgMkgvEaegvL4gcd2o8Wx/+gU+1ejyo3EQ+V5G+rOw3sbFoFrHSofJ3uSoxtnMVf8hTx+MbktelWqFhh1Hhi2FbN+t7rX2hBUHNOjA/qYwxDX67UmZqC3bZn2laP/ZfdwWFDD5DLZskF2eApinBjF7J4BpaK0npl9XXeSm8rzv9aQ=='
+  ENCRYPTED_TEST_DATA = Base64.decode64 'RqcD37GZP0D3T24GEU+xEI9v8D/jKpwIFhD37EJ/MBMF82MqeyJ/RN689UExT2kzuOt8CqIA2S6c9xXVxw4aWTPJq8jJO431yFvSYQBNGyQ6jkPCE5s2TW8HI5vxWiaGkIdR6wJJP2KtDr5s0BsspjDmH2dNlQ6sPnkKJJEaxuS041PjwA8F+gEKbbwCmOc5hs4J8yQfBezn61VXYXzRDDSUtYhhscko9Nb44O9fXRcLh0KXr2nqZcn16pWalwHvx9zBt9EROlCRJmGPXBZPmXdtTgGNZZqaaca+3p5VjXN652sdT4EQX52sKLWBLSiwHD+u15NoAJ8BcQwBnW8Nng=='
 
-  def test_private_key_from_msblob
-    key = OpenSSL::PKey::RSA.from_mskeyblob(TEST_PRIVATE_KEY)
-    assert key.private?
+  def test_private_key_from_mskeyblob
+    base = File.dirname(__FILE__)
+    msblob = File.binread(File.join(base, 'fixtures', 'msblob'))
 
-    test = key.private_decrypt(key.public_encrypt(TEST_DATA))
-    assert_equal test, TEST_DATA
-
-    test = key.public_decrypt(key.private_encrypt(TEST_DATA))
-    assert_equal test, TEST_DATA
-
-    assert_equal key.private_decrypt(ENCRYPTED_TEST_DATA), TEST_DATA
-    assert_equal key.public_decrypt(ENCRYPTED_TEST_DATA), TEST_DATA
+    key = OpenSSL::PKey::RSA.from_mskeyblob msblob
 
     assert_not_nil key
+    assert key.private?
+
+    pem = File.read(File.join(base, 'fixtures', 'pem'))
+    pem_key = OpenSSL::PKey::RSA.new pem
+
+    assert_equal key.n, pem_key.n
+    assert_equal key.e, pem_key.e
+    assert_equal key.d, pem_key.d
+    assert_equal key.p, pem_key.p
+    assert_equal key.q, pem_key.q
+    assert_equal key.dmp1, pem_key.dmp1
+    assert_equal key.dmq1, pem_key.dmq1
+    assert_equal key.iqmp, pem_key.iqmp
+
+    assert_equal key.private_decrypt(key.public_encrypt(TEST_DATA)), TEST_DATA
+    assert_equal key.public_decrypt(key.private_encrypt(TEST_DATA)), TEST_DATA
+
+    assert_equal key.private_decrypt(ENCRYPTED_TEST_DATA), TEST_DATA
+  end
+
+  def test_private_key_to_mskeyblob
+    base = File.dirname(__FILE__)
+    msblob = File.binread(File.join(base, 'fixtures', 'msblob'))
+    pem = File.read(File.join(base, 'fixtures', 'pem'))
+
+    pem_key = OpenSSL::PKey::RSA.new pem
+
+    assert_equal pem_key.to_mskeyblob, msblob
+
+    msblob = File.binread(File.join(base, 'fixtures', 'msblob.pub'))
+    assert_equal pem_key.to_mskeyblob(include_private: false), msblob
+  end
+
+  def test_public_key_from_mskeyblob
+    base = File.dirname(__FILE__)
+    msblob = File.binread(File.join(base, 'fixtures', 'msblob.pub'))
+
+    key = OpenSSL::PKey::RSA.from_mskeyblob msblob
+
+    assert_not_nil key
+    assert key.public?
+    assert !key.private?
+
+    pem = File.read(File.join(base, 'fixtures', 'pem'))
+    pem_key = OpenSSL::PKey::RSA.new pem
+
+    assert_equal key.n, pem_key.n
+    assert_equal key.e, pem_key.e
+
+    assert_equal key.public_decrypt(pem_key.private_encrypt(TEST_DATA)), TEST_DATA
+  end
+
+  def test_public_key_to_mskeyblob
+    base = File.dirname(__FILE__)
+    msblob = File.binread(File.join(base, 'fixtures', 'msblob.pub'))
+    pem = File.read(File.join(base, 'fixtures', 'pem.pub'))
+
+    pem_key = OpenSSL::PKey::RSA.new pem
+
+    assert_equal pem_key.to_mskeyblob, msblob
   end
 end
