@@ -1,6 +1,7 @@
 # Microsoft RSA key blob
 
-    Exchange RSA keys between Microsoft CSP blob format (ExportCspBlob, ImportCspBlob) and ruby openssl key OpenSSL::PKey::RSA
+    Exchange RSA keys between Microsoft CSP blob format (ExportCspBlob, ImportCspBlob of RSACryptoServiceProvider)
+    and ruby openssl key OpenSSL::PKey::RSA
 
 ## Installation
 
@@ -18,9 +19,22 @@ Or install it yourself as:
 
 ## Usage
 
+Create key from blob created by ExportCspBlob
 
+```ruby
+    blob = File.binread 'msblob.bin'
 
-TODO: Write usage instructions here
+    key = OpenSSL::PKey::RSA.from_mskeyblob blob
+```    
+
+Create blob for ExportCspBlob
+
+```ruby
+    key = OpenSSL::PKey::RSA.new 2048
+
+    blob = key.to_mskeyblob
+    public_blob = key.to_mskeyblob(include_private: false)
+```
 
 ## Contributing
 
@@ -33,5 +47,6 @@ TODO: Write usage instructions here
 
 ## Links
 
-https://msdn.microsoft.com/en-us/library/windows/desktop/aa382021%28v=vs.85%29.aspx
-http://blog.flame.org/2009/02/28/ruby-and-openssl.html
+1. [MSDN Enhanced Provider Key BLOBs](https://msdn.microsoft.com/en-us/library/windows/desktop/aa382021%28v=vs.85%29.aspx)
+
+2. [Ruby and OpenSSL](http://blog.flame.org/2009/02/28/ruby-and-openssl.html)
