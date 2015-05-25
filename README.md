@@ -1,21 +1,7 @@
 # Microsoft RSA key blob
 
-    Exchange RSA keys between Microsoft CSP blob format (ExportCspBlob, ImportCspBlob of RSACryptoServiceProvider)
-    and ruby openssl key OpenSSL::PKey::RSA
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'mskeyblob'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install mskeyblob
+Exchange RSA keys between Microsoft CSP blob format (ExportCspBlob, ImportCspBlob of RSACryptoServiceProvider)
+and ruby openssl key OpenSSL::PKey::RSA
 
 ## Usage
 
@@ -35,6 +21,20 @@ Create blob for ExportCspBlob
     blob = key.to_mskeyblob
     public_blob = key.to_mskeyblob(include_private: false)
 ```
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'mskeyblob'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install mskeyblob
 
 ## Contributing
 
